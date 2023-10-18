@@ -19,7 +19,7 @@ markdown = """\
 |:-------------------------:|:-------------------------:|:-------------------------:|
 """
 for i, path in enumerate(urdf_files):
-    urdf_model = yourdfpy.URDF.load(path)
+    # urdf_model = yourdfpy.URDF.load(path)
     gripper_name = os.path.splitext(os.path.basename(path))[0]
 
     markdown = (
@@ -28,8 +28,9 @@ for i, path in enumerate(urdf_files):
     )
 
     if i % animations_per_row == 0:
-        markdown = markdown + "|"
+        markdown = markdown + "|\n"
 
+    continue
     loop_time = 0.1  # creates 10 frames
     trajectory = generate_joint_limit_trajectory(
         urdf_model=urdf_model, loop_time=loop_time
