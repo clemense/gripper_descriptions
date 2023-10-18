@@ -27,7 +27,7 @@ for i, path in enumerate(urdf_files):
 
     markdown = (
         markdown
-        + f'|<img width="200px" alt="{gripper_name}" src="https://github.com/clemense/gripper_descriptions/blob/main/images/animations/{gripper_name}.gif">'  # [{path}]({path})'
+        + f'|<img width="200px" alt="{gripper_name}" src="https://github.com/clemense/gripper_descriptions/blob/main/images/animations/{gripper_name}.gif"> <br> [{gripper_name}]({path})'
     )
 
     if (i + 1) % animations_per_row == 0 or (i + 1) == len(urdf_files):
