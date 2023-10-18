@@ -16,13 +16,13 @@ urdf_files = sorted(urdf_files)
 animations_per_row = 4
 markdown = (
     "| ".join([""] * (animations_per_row + 1))
-    + "\n"
+    + "|\n"
     + "|:---:".join([""] * (animations_per_row + 1))
     + "|\n"
 )
 
 for i, path in enumerate(urdf_files):
-    # urdf_model = yourdfpy.URDF.load(path)
+    urdf_model = yourdfpy.URDF.load(path)
     gripper_name = os.path.splitext(os.path.basename(path))[0]
 
     markdown = (
@@ -33,7 +33,6 @@ for i, path in enumerate(urdf_files):
     if (i + 1) % animations_per_row == 0 or (i + 1) == len(urdf_files):
         markdown = markdown + "|\n"
 
-    continue
     loop_time = 0.1  # creates 10 frames
     trajectory = generate_joint_limit_trajectory(
         urdf_model=urdf_model, loop_time=loop_time
@@ -71,6 +70,10 @@ for i, path in enumerate(urdf_files):
             f.close()
 
             tmp_png_fnames.append(fname)
+
+            # Make image square
+            cmd = f"convert {fname} -shave 80x0 {fname}"
+            os.system(cmd)
 
     cmd = f"convert -delay 10 -loop 0 {' '.join(tmp_png_fnames)} images/animations/{gripper_name}.gif"
     os.system(cmd)
