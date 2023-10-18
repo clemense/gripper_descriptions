@@ -14,20 +14,23 @@ urdf_files = glob.glob("*/**/*.urdf")
 urdf_files = sorted(urdf_files)
 
 animations_per_row = 4
-markdown = """\
-| | | |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-"""
+markdown = (
+    "| ".join([""] * (animations_per_row + 1))
+    + "\n"
+    + "|:---:".join([""] * (animations_per_row + 1))
+    + "|\n"
+)
+
 for i, path in enumerate(urdf_files):
     # urdf_model = yourdfpy.URDF.load(path)
     gripper_name = os.path.splitext(os.path.basename(path))[0]
 
     markdown = (
         markdown
-        + f'|<img width="{100//animations_per_row}%" alt="{gripper_name}" src="https://github.com/clemense/gripper_descriptions/blob/main/images/animations/{gripper_name}.gif">'
+        + f'|<img width="200px" alt="{gripper_name}" src="https://github.com/clemense/gripper_descriptions/blob/main/images/animations/{gripper_name}.gif" ({path})>'
     )
 
-    if i % animations_per_row == 0:
+    if (i + 1) % animations_per_row == 0 or (i + 1) == len(urdf_files):
         markdown = markdown + "|\n"
 
     continue
